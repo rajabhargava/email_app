@@ -1,15 +1,15 @@
 package android.email_app.javamailapi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import javax.mail.MessagingException;
+import net.simplifiedcoding.javamailexample.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -47,11 +47,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonInbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    receiveEmail();
-                } catch (MessagingException e) {
-                    e.printStackTrace();
-                }
+                Intent i =new Intent(MainActivity.this,ReceiveEmailActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -70,23 +67,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sm.execute();
     }
 
-    private void receiveEmail() throws MessagingException {
-        ReceiveMail rm = new ReceiveMail(this,"bhargavar100@gmail.com","bhargavar100");
-        rm.execute();
-        setContentView(R.layout.inbox);
-        javax.mail.Message[] messages = rm.messages;
-        sender_name = (TextView) findViewById(R.id.sender_name);
-        listView = (ListView) findViewById(R.id.list_mail);
-        String[] from = new String[messages.length];
-        for(int i =0; i<messages.length; i++) {
-            javax.mail.Message msg = messages[i];
-            from[i] = String.valueOf(msg.getFrom());
-        }
-        ArrayAdapter<String> emails = new ArrayAdapter<String>(this,R.layout.inbox,R.id.sender_name,from);
-        listView.setAdapter(emails);
+//  private void receiveEmail() throws MessagingException {
+//        ReceiveMail rm = new ReceiveMail(this,"bhargavar100@gmail.com","bhargavar100");
+//        rm.execute();
+//        setContentView(R.layout.inbox);
+//        javax.mail.Message[] messages = rm.messages;
+//        sender_name = (TextView) findViewById(R.id.sender_name);
+//        listView = (ListView) findViewById(R.id.list_mail);
+//        String[] from = new String[messages.length];
+//        for(int i =0; i<messages.length; i++) {
+//            javax.mail.Message msg = messages[i];
+//            from[i] = String.valueOf(msg.getFrom());
+//        }
+//        ArrayAdapter<String> emails = new ArrayAdapter<String>(this,R.layout.inbox,R.id.sender_name,from);
+//        listView.setAdapter(emails);
 
 
-    }
 
     @Override
     public void onClick(View v) {
